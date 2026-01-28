@@ -1,131 +1,112 @@
 import streamlit as st
+from datetime import datetime, date
 
-# Configuration de la page
-st.set_page_config(page_title="Simulateur Complet Parcoursup 974", page_icon="🇷🇪", layout="wide")
+st.set_page_config(page_title="PsyEN-EDO : Module Admission", layout="wide", page_icon="🎓")
 
-# --- INITIALISATION DE LA MÉMOIRE (SESSION STATE) ---
-# C'est ici qu'on stocke la liste des vœux pour ne pas les perdre quand on clique
-if 'mes_voeux' not in st.session_state:
-    st.session_state.mes_voeux = []
-
-# --- FONCTIONS ---
-def ajouter_voeu(nom, type_voeu):
-    st.session_state.mes_voeux.append({
-        "nom": nom,
-        "type": type_voeu,
-        "statut": "En attente" # Au début, tout le monde est en attente
-    })
-
-def reset_simulation():
-    st.session_state.mes_voeux = []
-
-# --- INTERFACE ---
-st.title("🇷🇪 Pilotage Parcoursup - La Réunion")
-st.markdown("### Simulateur de gestion de liste de vœux")
-st.info("Ajoutez vos vœux à gauche, puis changez leur statut pour voir comment réagir.")
-
-# --- BARRE LATÉRALE : SAISIE DES VŒUX ---
+# --- 1. SIMULATION TEMPORELLE (SIDEBAR) ---
+# Indispensable pour tester le comportement de l'appli à différentes dates
 with st.sidebar:
-    st.header("1. Saisir mes vœux")
-    st.caption("Entrez ici toute votre liste de vœux confirmés.")
+    st.header("🕰️ Zone de Test Temporel")
+    mode_simulation = st.checkbox("Activer la simulation de date", value=True)
     
-    with st.form("ajout_voeu"):
-        nom_voeu = st.text_input("Nom de la formation", placeholder="Ex: BTS SIO - Le Tampon")
-        type_voeu = st.radio("Type de formation", ["Sélective (BTS, BUT, CPGE...)", "Non Sélective (Licence, PASS...)"])
-        submit = st.form_submit_button("Ajouter ce vœu")
-        
-        if submit and nom_voeu:
-            ajouter_voeu(nom_voeu, type_voeu)
-            st.success(f"Vœu '{nom_voeu}' ajouté !")
+    if mode_simulation:
+        # On fixe la date par défaut au 2 Juin (Début des réponses)
+        date_simulee = st.date_input("Simuler une date :", value=date(2025, 6, 2))
+    else:
+        date_simulee = datetime.now().date()
 
-    st.divider()
-    if st.button("🗑️ Tout effacer et recommencer"):
-        reset_simulation()
-        st.rerun()
+    st.info(f"📅 Date active : {date_simulee.strftime('%d/%m/%Y')}")
 
-# --- ZONE PRINCIPALE : LE TABLEAU DE BORD ---
-st.header("2. Mon Tableau de Bord")
+# --- 2. LOGIQUE DES PHASES PARCOURSUP ---
+def get_parcoursup_phase(current_date):
+    """
+    Détermine la sous-phase précise de l'admission Parcoursup.
+    Basé sur le démarrage au 02 Juin.
+    """
+    # Avant le 2 Juin : Attente
+    if current_date < date(current_date.year, 6, 2):
+        return {
+            "id": 0,
+            "titre": "⏳ Phase d'Attente",
+            "message": "Les dossiers sont remontés. On prépare les élèves au jour J.",
+            "color": "grey"
+        }
 
-if not st.session_state.mes_voeux:
-    st.warning("👈 Commencez par ajouter des vœux dans le menu de gauche !")
-else:
-    # On affiche la liste
-    col1, col2 = st.columns([2, 1])
-    
-    nb_oui_momentane = 0
-    nb_oui_definitif = 0
-    
-    # On parcourt la liste des vœux pour créer les contrôles
-    for i, voeu in enumerate(st.session_state.mes_voeux):
-        with st.container():
-            c1, c2, c3 = st.columns([3, 2, 2])
+    # TEMPS 1 : Ouverture & Premières Réponses (2 Juin - 6 Juin)
+    # C'est la période de forte charge émotionnelle et technique (délais courts)
+    elif date(current_date.year, 6, 2) <= current_date <= date(current_date.year, 6, 6):
+        return {
+            "id": 1,
+            "titre": "🚨 ADMISSION TEMPS 1 : Le Choc & Les Premiers Choix",
+            "message": "Action Prioritaire : Expliquer les 'Oui', 'Oui-si' et 'En attente'. Éviter la validation précipitée.",
+            "color": "red"
+        }
+
+    # TEMPS 2 : Fluidification & Listes d'Attente (7 Juin - 23 Juin)
+    # Les rangs bougent, le GDD (Groupe Dossier) s'active pour les 'En attente'
+    elif date(current_date.year, 6, 7) <= current_date <= date(current_date.year, 6, 23):
+        return {
+            "id": 2,
+            "titre": "📉 ADMISSION TEMPS 2 : Stratégie & Patience",
+            "message": "Action Prioritaire : Analyser l'évolution des rangs liste d'attente. Rassurer sur la vitesse de progression.",
+            "color": "orange"
+        }
+
+    # TEMPS 3 : Phase Complémentaire & CAES (À partir du 24 Juin)
+    # Gestion des "Sans proposition" et ouverture de la phase complémentaire
+    else:
+        return {
+            "id": 3,
+            "titre": "🆘 ADMISSION TEMPS 3 : Secours & Complémentaire",
+            "message": "Action Prioritaire : Saisie des vœux en phase complémentaire et saisine CAES.",
+            "color": "green"
+        }
+
+# --- 3. INTERFACE CONTEXTUELLE ---
+phase_info = get_parcoursup_phase(date_simulee)
+
+st.title(f"Assistant Admission - {phase_info['titre']}")
+st.markdown(f"**Directive du jour :** :{phase_info['color']}[{phase_info['message']}]")
+st.divider()
+
+# --- 4. WIDGETS SPÉCIFIQUES PAR SOUS-PHASE ---
+
+# WIDGETS TEMPS 1 (Urgence & Compréhension)
+if phase_info['id'] == 1:
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("💡 Aide à la Décision Immédiate")
+        st.write("L'élève a reçu :")
+        choix = st.multiselect("Propositions reçues", ["OUI", "OUI-SI", "EN ATTENTE", "REFUS"])
+        if "OUI-SI" in choix:
+            st.warning("⚠️ **OUI-SI** : Vérifier les conditions (remise à niveau) avant d'accepter !")
+        if "OUI" in choix and "EN ATTENTE" in choix:
+            st.success("✅ Conseil : Accepter le OUI (provisoirement) et maintenir les vœux EN ATTENTE préférés.")
             
-            # Nom et Type
-            with c1:
-                st.subheader(f"{i+1}. {voeu['nom']}")
-                if "Non Sélective" in voeu['type']:
-                    st.caption("🟢 Formation Non Sélective")
-                else:
-                    st.caption("🔴 Formation Sélective")
-            
-            # Sélecteur de statut (Simulation)
-            with c2:
-                nouveau_statut = st.selectbox(
-                    "État ce matin :",
-                    ["En attente", "Proposition d'admission", "Refusé", "J'ai ACCEPTÉ cette proposition", "J'ai RENONCÉ"],
-                    key=f"statut_{i}",
-                    index=["En attente", "Proposition d'admission", "Refusé", "J'ai ACCEPTÉ cette proposition", "J'ai RENONCÉ"].index(voeu['statut'])
-                )
-                # Mise à jour de la mémoire
-                st.session_state.mes_voeux[i]['statut'] = nouveau_statut
+    with col2:
+        st.subheader("📞 Script d'Urgence")
+        st.info("« Ne te précipite pas pour renoncer. Tu as un délai de réflexion (J+2). On regarde tes rangs ensemble. »")
 
-            # Analyse immédiate par ligne
-            with c3:
-                if nouveau_statut == "Proposition d'admission":
-                    st.info("🔔 **Action :** Vous pouvez accepter ou refuser.")
-                elif nouveau_statut == "Refusé":
-                    if "Non Sélective" in voeu['type']:
-                        st.error("Bizarre... Une non-sélective ne peut pas refuser (sauf si capacités atteintes). Vérifiez.")
-                    else:
-                        st.error("❌ C'est fini pour ce vœu.")
-                elif nouveau_statut == "J'ai ACCEPTÉ cette proposition":
-                    st.success("✅ Vœu gardé (Panier)")
-                    nb_oui_momentane += 1
-                elif nouveau_statut == "J'ai RENONCÉ":
-                    st.write("🗑️ Abandonné")
-
-            st.divider()
-
-    # --- ÉTAPE 3 : ANALYSE GLOBALE (LE CERVEAU DU PSYEN) ---
-    st.header("3. Analyse de votre situation")
+# WIDGETS TEMPS 2 (Calcul & Analyse)
+elif phase_info['id'] == 2:
+    st.subheader("📊 Calculateur de Probabilité (Liste d'Attente)")
+    col1, col2, col3 = st.columns(3)
+    rang = col1.number_input("Rang de l'élève", value=150)
+    dernier_pris = col2.number_input("Rang du dernier appelé (an dernier)", value=200)
     
-    # Règle du Panier Unique
-    if nb_oui_momentane > 1:
-        st.error("🚨 **ALERTE ROUGE : ILLÉGAL !**")
-        st.markdown(f"""
-        Vous avez mis **"J'ai ACCEPTÉ"** sur {nb_oui_momentane} formations différentes.
-        
-        🛑 **Règle absolue :** Vous ne pouvez garder qu'**UNE SEULE** proposition à la fois.
-        👉 Vous devez renoncer aux autres immédiatement, sinon Parcoursup annulera tout.
-        """)
-    
-    elif nb_oui_momentane == 1:
-        st.success("✅ **Situation Valide**")
-        st.markdown("""
-        Vous avez 1 formation dans votre panier. C'est parfait.
-        
-        👉 **Conseil Stratégique :**
-        Si vous avez d'autres vœux qui sont encore "En attente" et qui vous intéressent, **n'oubliez pas de cocher "Maintenir mes vœux en attente"** lors de la validation !
-        """)
-        
-    elif nb_oui_momentane == 0:
-        # Vérifions s'il y a des propositions en attente de réponse
-        propositions_dispo = [v for v in st.session_state.mes_voeux if v['statut'] == "Proposition d'admission"]
-        
-        if len(propositions_dispo) > 1:
-            st.warning("⚖️ **Le Duel !**")
-            st.write(f"Vous avez {len(propositions_dispo)} propositions sur la table. Vous devez en choisir **UNE SEULE** à accepter. Les autres devront être refusées.")
-        elif len(propositions_dispo) == 1:
-            st.info("👉 Vous avez une proposition. Si elle vous plaît, acceptez-la pour sécuriser.")
+    if col3.button("Analyser"):
+        delta = dernier_pris - rang
+        if delta > 20:
+            st.success("🟢 Très favorable. Maintien conseillé.")
+        elif delta > 0:
+            st.warning("🟠 Incertain mais possible. Garder en backup.")
         else:
-            st.write("⏳ En attente de propositions...")
+            st.error("🔴 Très compromis. Activer plan B.")
+
+# WIDGETS TEMPS 3 (Secours)
+elif phase_info['id'] == 3:
+    st.subheader("🔎 Moteur Phase Complémentaire")
+    domaine = st.text_input("Domaine recherché (ex: BTS MCO)")
+    st.write("Génération de la liste des places vacantes à La Réunion...")
+    # (Ici on connecterait ta base de données ou un fichier CSV des places vacantes)
+    st.markdown("*Lien vers la fiche de saisine CAES (Commission d'Accès à l'Enseignement Supérieur)*")
