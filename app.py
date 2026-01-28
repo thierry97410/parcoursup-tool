@@ -2,167 +2,355 @@ import streamlit as st
 import random
 import time
 
-# --- CONFIGURATION ---
-st.set_page_config(page_title="Simulateur Parcoursup Élève", page_icon="🎓")
+# --- 1. CONFIGURATION DE LA PAGE ---
+st.set_page_config(
+    page_title="Simulateur Parcoursup",
+    page_icon="🎓",
+    layout="wide"
+)
 
-# --- INITIALISATION DE LA MÉMOIRE ---
+# --- 2. INITIALISATION DE LA MÉMOIRE (SESSION STATE) ---
+# On stocke ici toutes les variables qui doivent survivre aux clics
+
 if 'simulation_state' not in st.session_state:
-    st.session_state.simulation_state = "SAISIE" # États possibles : SAISIE, ADMISSION
+    st.session_state.simulation_state = "SAISIE" # États : SAISIE ou ADMISSION
+
 if 'mon_panier' not in st.session_state:
-    st.session_state.mon_panier = [] # Liste des vœux choisis
+    st.session_state.mon_panier = [] # Liste des vœux de l'élève
+
 if 'resultats_simules' not in st.session_state:
-    st.session_state.resultats_simules = {} # Résultats (OUI, NON...) générés
+    st.session_state.resultats_simules = {} # Les réponses (OUI, NON...)
+
 if 'mon_choix_actuel' not in st.session_state:
     st.session_state.mon_choix_actuel = None # Le vœu accepté provisoirement
 
-# --- BASE DE DONNÉES FICTIVE ---
-FORMATIONS_FICTIVES = [
-    "Licence Droit - Université de La Réunion (Nord)",
-    "Licence Psycho - Université de La Réunion (Tampon)",
-    "BTS MCO - Lycée Bellepierre",
-    "BTS SAM - Lycée Le Verger",
-    "BUT Informatique - IUT Saint-Pierre",
-    "CPGE Littéraire - Lycée Leconte de Lisle",
-    "IFSI - CHU Saint-Denis",
-    "DN MADe Graphisme - Lycée Ambroise Vollard"
-]
+if 'compteur_jours' not in st.session_state:
+    st.session_state.compteur_jours = 0 # Pour le voyage dans le temps
 
-# --- FONCTIONS UTILES ---
+if 'date_affichee' not in st.session_state:
+    st.session_state.date_affichee = "2 Juin"
+
+# --- 3. BASE DE DONNÉES (CATALOGUE DES FORMATIONS) ---
+# Structure : Nom -> Type (simple/multiple) -> Zone -> Sous-vœux éventuels
+
+CATALOGUE = {
+    # --- FORMATIONS RÉUNION (974) ---
+    "Licence Droit - Université de La Réunion (Nord)": {
+        "type": "simple", "zone": "🇷🇪 Réunion", "sous_voeux": []
+    },
+    "BTS MCO - Lycée Bellepierre (St-Denis)": {
+        "type": "simple", "zone": "🇷🇪 Réunion", "sous_voeux": []
+    },
+    "BTS SAM - Lycée Le Verger (Ste-Marie)": {
+        "type": "simple", "zone": "🇷🇪 Réunion", "sous_voeux": []
+    },
+    "BUT Techniques de Co. - IUT St-Pierre": {
+        "type": "simple", "zone": "🇷🇪 Réunion", "sous_voeux": []
+    },
+    "CPGE Scientifique (MPSI/PCSI) - Réunion": {
+        "type": "multiple", "zone": "🇷🇪 Réunion", 
+        "sous_voeux": [
+            "Lycée Leconte de Lisle - MPSI",
+            "Lycée Leconte de Lisle - PCSI",
+            "Lycée Roland Garros - PCSI"
+        ]
+    },
+    "IFSI (Soins Infirmiers) - Regroupement 974": {
+        "type": "multiple", "zone": "🇷🇪 Réunion",
+        "sous_voeux": ["CHU Nord (St-Denis)", "CHU Sud (St-Pierre)"]
+    },
+
+    # --- FORMATIONS MÉTROPOLE (FR) ---
+    "Licence Psychologie - Université Paris Cité": {
+        "type": "simple", "zone": "🇫🇷 Métropole", "sous_voeux": []
+    },
+    "Licence STAPS - Université de Bordeaux": {
+        "type": "simple", "zone": "🇫🇷 Métropole", "sous_voeux": []
+    },
+    "CPGE Littéraire (A/L) - Paris & IDF": {
+        "type": "multiple", "zone": "🇫🇷 Métropole",
+        "sous_voeux": [
+            "Lycée Henri IV (Paris)",
+            "Lycée Fénelon (Paris)",
+            "Lycée Lakanal (Sceaux)",
+            "Lycée Chaptal (Paris)"
+        ]
+    },
+    "Écoles d'Ingénieurs (Concours Geipi Polytech)": {
+        "type": "multiple", "zone": "🇫🇷 Métropole",
+        "sous_voeux": [
+            "Polytech Lyon", "Polytech Montpellier", "Polytech Nantes", "Polytech Lille"
+        ]
+    },
+    "Sciences Po - Réseau ScPo (Concours Commun)": {
+        "type": "multiple", "zone": "🇫🇷 Métropole",
+        "sous_voeux": [
+            "Sciences Po Lille", "Sciences Po Lyon", "Sciences Po Rennes", "Sciences Po Toulouse"
+        ]
+    }
+}
+
+# --- 4. FONCTIONS LOGIQUES ---
+
 def reset_simulation():
+    """Remet tout à zéro pour un nouvel élève"""
     st.session_state.simulation_state = "SAISIE"
     st.session_state.mon_panier = []
     st.session_state.resultats_simules = {}
     st.session_state.mon_choix_actuel = None
+    st.session_state.compteur_jours = 0
+    st.session_state.date_affichee = "2 Juin"
 
-def generer_resultats():
-    """Génère aléatoirement des réponses pour chaque vœu du panier"""
-    etats_possibles = ["OUI", "OUI-SI", "EN ATTENTE", "REFUS"]
-    poids = [0.3, 0.1, 0.4, 0.2] # Probabilités
+def ajouter_voeu(nom_formation, sous_voeux_selectionnes=None):
+    """Ajoute les choix au panier de l'élève"""
+    info = CATALOGUE[nom_formation]
     
-    resultats = {}
-    for v in st.session_state.mon_panier:
-        statut = random.choices(etats_possibles, weights=poids)[0]
-        # On ajoute des détails fictifs pour le réalisme
+    # Cas 1 : Vœu Simple
+    if info['type'] == "simple":
+        # On vérifie les doublons
+        deja_present = any(v['titre'] == nom_formation for v in st.session_state.mon_panier)
+        if not deja_present:
+            st.session_state.mon_panier.append({
+                "titre": nom_formation, 
+                "groupe": "Vœu Unique", 
+                "zone": info['zone']
+            })
+            st.toast("Vœu ajouté !", icon="✅")
+        else:
+            st.warning("Déjà dans ton dossier.")
+
+    # Cas 2 : Vœu Multiple (On ajoute chaque sous-vœu comme une ligne distincte)
+    elif info['type'] == "multiple" and sous_voeux_selectionnes:
+        count = 0
+        for sv in sous_voeux_selectionnes:
+            deja_present = any(v['titre'] == sv for v in st.session_state.mon_panier)
+            if not deja_present:
+                st.session_state.mon_panier.append({
+                    "titre": sv, 
+                    "groupe": nom_formation, # On garde le nom du regroupement
+                    "zone": info['zone']
+                })
+                count += 1
+        if count > 0:
+            st.toast(f"{count} sous-vœux ajoutés !", icon="✅")
+
+def generer_premiers_resultats():
+    """Génère les résultats du 2 Juin (Situation initiale)"""
+    etats = ["OUI", "OUI-SI", "EN ATTENTE", "REFUS"]
+    poids = [0.15, 0.05, 0.60, 0.20] # 60% de chance d'être en attente (réaliste)
+    
+    res = {}
+    for item in st.session_state.mon_panier:
+        statut = random.choices(etats, weights=poids)[0]
         details = {}
+        
+        # Si en attente, on génère des rangs
         if statut == "EN ATTENTE":
-            details = {"rang": random.randint(100, 500), "dernier_admis": random.randint(150, 600)}
-        resultats[v] = {"statut": statut, "details": details}
+            mon_rang = random.randint(100, 600)
+            # Pour qu'il y ait du suspense, le dernier admis doit être inférieur à mon rang
+            dernier_admis = mon_rang - random.randint(10, 150) 
+            if dernier_admis < 0: dernier_admis = 0
+            
+            details = {"rang": mon_rang, "dernier_admis": dernier_admis}
+            
+        res[item['titre']] = {
+            "statut": statut, 
+            "details": details, 
+            "groupe": item['groupe'], 
+            "zone": item['zone']
+        }
     
-    st.session_state.resultats_simules = resultats
+    st.session_state.resultats_simules = res
     st.session_state.simulation_state = "ADMISSION"
 
-# --- INTERFACE ---
+def avancer_le_temps():
+    """Simule le passage des jours et la libération des places"""
+    st.session_state.compteur_jours += 2
+    
+    # Liste des dates simulées
+    calendrier = ["4 Juin", "6 Juin", "8 Juin", "10 Juin", "12 Juin", "15 Juin", "18 Juin", "25 Juin"]
+    idx = min(st.session_state.compteur_jours // 2, len(calendrier) - 1)
+    st.session_state.date_affichee = calendrier[idx]
 
-st.title("🎮 Simulateur d'Entraînement Parcoursup")
+    # Mise à jour des rangs pour les vœux en attente
+    changements = 0
+    for nom, data in st.session_state.resultats_simules.items():
+        if data['statut'] == "EN ATTENTE":
+            # Le rang du dernier admis augmente (des gens se sont désistés)
+            progression = random.randint(5, 40) # Avancée aléatoire
+            data['details']['dernier_admis'] += progression
+            
+            # CHECK : Est-ce que je suis pris ?
+            if data['details']['dernier_admis'] >= data['details']['rang']:
+                data['statut'] = "OUI" # Libération !
+                changements += 1
+    
+    if changements > 0:
+        st.balloons() # Effet visuel
+        st.toast(f"🎉 {changements} vœu(x) débloqué(s) !", icon="📬")
+    else:
+        st.toast("Rien de nouveau aujourd'hui... Patience.", icon="⏳")
 
-# === ÉCRAN 1 : LA SAISIE DES VŒUX ===
+# --- 5. INTERFACE UTILISATEUR ---
+
+st.title("🎓 Entraînement Parcoursup")
+
+# ====== ÉTAPE 1 : LA SAISIE DES VŒUX ======
 if st.session_state.simulation_state == "SAISIE":
-    st.header("Étape 1 : Fais tes courses !")
-    st.write("Imagine que nous sommes en Janvier. Choisis des formations pour remplir ton dossier.")
-    
-    col1, col2 = st.columns([2, 1])
-    
+    st.header("1. Constitue ton dossier de vœux")
+    st.caption("Choisis des formations à La Réunion ou en Métropole.")
+
+    col1, col2 = st.columns([1.5, 1])
+
     with col1:
-        choix = st.selectbox("Rechercher une formation", FORMATIONS_FICTIVES)
-        if st.button("Ajouter à ma liste de vœux"):
-            if choix not in st.session_state.mon_panier:
-                st.session_state.mon_panier.append(choix)
-                st.success(f"{choix} ajouté !")
-            else:
-                st.warning("Tu as déjà demandé cette formation.")
+        st.subheader("🔍 Catalogue")
+        
+        # Filtre géographique
+        zone_filter = st.radio("Zone :", ["Tout", "🇷🇪 Réunion", "🇫🇷 Métropole"], horizontal=True)
+        
+        # Filtrage de la liste
+        choix_possibles = [k for k,v in CATALOGUE.items() if zone_filter == "Tout" or v['zone'] == zone_filter]
+        
+        formation_choisie = st.selectbox("Rechercher une formation...", choix_possibles)
+        
+        # Logique d'affichage selon le type (Simple vs Multiple)
+        info = CATALOGUE[formation_choisie]
+        
+        with st.container(border=True):
+            st.markdown(f"**{formation_choisie}**")
+            st.caption(f"📍 {info['zone']}")
+            
+            if info['type'] == "simple":
+                if st.button("Ajouter ce vœu"):
+                    ajouter_voeu(formation_choisie)
+            
+            elif info['type'] == "multiple":
+                st.info("📚 C'est un vœu multiple (regroupement).")
+                sous_voeux = st.multiselect("Coche les établissements visés :", info['sous_voeux'])
+                if st.button("Valider les sous-vœux"):
+                    if sous_voeux:
+                        ajouter_voeu(formation_choisie, sous_voeux)
+                    else:
+                        st.error("Sélectionne au moins un établissement.")
 
     with col2:
-        st.subheader("📋 Ma Liste")
+        st.subheader("🎒 Mon Panier")
         if not st.session_state.mon_panier:
-            st.info("Ton panier est vide.")
+            st.info("Ton dossier est vide.")
         else:
+            # Affichage propre du panier
             for v in st.session_state.mon_panier:
-                st.markdown(f"- {v}")
+                flag = v['zone'].split(" ")[0]
+                if v['groupe'] == "Vœu Unique":
+                    st.text(f"{flag} {v['titre']}")
+                else:
+                    st.text(f"{flag} {v['groupe']} \n ↳ {v['titre']}")
             
             st.divider()
-            if len(st.session_state.mon_panier) >= 1:
-                st.write("Prêt pour les résultats ?")
-                if st.button("🚀 LANCER LA SIMULATION (Juin)", type="primary"):
-                    with st.spinner("L'algorithme tourne... On avance le temps jusqu'au 2 juin..."):
-                        time.sleep(2) # Petit effet de suspense
-                        generer_resultats()
-                        st.rerun()
+            st.markdown(f"**Total : {len(st.session_state.mon_panier)} vœux**")
+            
+            if st.button("🚀 VALIDER & LANCER LA SIMULATION (2 Juin)", type="primary"):
+                with st.spinner("Calcul de l'algorithme..."):
+                    time.sleep(1.5)
+                    generer_premiers_resultats()
+                    st.rerun()
 
-# === ÉCRAN 2 : L'ADMISSION (RÉPONSES) ===
+# ====== ÉTAPE 2 : L'ADMISSION (RÉSULTATS) ======
 elif st.session_state.simulation_state == "ADMISSION":
-    st.header("Étape 2 : Le Jour des Résultats (2 Juin)")
-    st.info("💡 Règle d'or : Tu ne peux garder qu'un seul 'OUI' ou 'OUI-SI' à la fois !")
     
-    # Affichage du choix actuel (Le "Sac à dos")
-    if st.session_state.mon_choix_actuel:
-        st.success(f"🎒 Tu as accepté provisoirement : **{st.session_state.mon_choix_actuel}**")
-    else:
-        st.warning("🎒 Tu n'as encore rien accepté.")
+    # --- BARRE DE CONTRÔLE TEMPOREL ---
+    c_time1, c_time2 = st.columns([3, 1])
+    with c_time1:
+        st.title(f"📅 Date : {st.session_state.date_affichee}")
+    with c_time2:
+        if st.button("⏩ Avancer de 2 jours"):
+            avancer_le_temps()
+            st.rerun()
+    
+    # --- RAPPEL DU CHOIX ACTUEL ---
+    st.info("💡 RÈGLE D'OR : Tu ne peux garder qu'un seul 'OUI' (ou 'OUI-SI') à la fois !")
+    
+    with st.container(border=True):
+        col_sac, col_etat = st.columns([1, 4])
+        with col_sac:
+            st.image("https://cdn-icons-png.flaticon.com/512/2910/2910768.png", width=50) # Icone sac à dos
+        with col_etat:
+            if st.session_state.mon_choix_actuel:
+                st.markdown(f"### ✅ Proposition acceptée : **{st.session_state.mon_choix_actuel}**")
+                st.caption("Si tu acceptes une autre proposition 'OUI' ci-dessous, celle-ci sera perdue.")
+            else:
+                st.markdown("### ⚠️ Aucune proposition acceptée.")
+                st.caption("Attention : si tu ne valides rien avant la date limite, tu perds tes propositions.")
 
     st.divider()
 
-    # Affichage des vœux et boutons d'action
-    for formation, data in st.session_state.resultats_simules.items():
-        statut = data['statut']
-        
-        # --- CARTE DE VŒU ---
-        with st.container(border=True):
-            c1, c2 = st.columns([3, 2])
-            
-            with c1:
-                st.subheader(formation)
-                
-                # Badges de couleur
-                if statut == "OUI":
-                    st.markdown(":green_heart: **Proposition d'admission (OUI)**")
-                elif statut == "OUI-SI":
-                    st.markdown(":large_yellow_circle: **OUI-SI (Sous condition)**")
-                elif statut == "EN ATTENTE":
-                    st.markdown(":hourglass: **En attente**")
-                    st.caption(f"Rang : {data['details'].get('rang')} / Dernier appelé : {data['details'].get('dernier_admis')}")
-                else:
-                    st.markdown(":no_entry_sign: **Refusé**")
+    # --- LISTE DES RÉSULTATS (CARTES) ---
+    # Tri : OUI en premier, puis EN ATTENTE, puis REFUS
+    liste_triee = sorted(
+        st.session_state.resultats_simules.items(), 
+        key=lambda x: 0 if x[1]['statut'] in ['OUI', 'OUI-SI'] else 1 if x[1]['statut'] == 'EN ATTENTE' else 2
+    )
 
-            # --- BOUTONS D'INTERACTION ---
-            with c2:
-                # CAS 1 : C'est déjà mon choix actuel
-                if st.session_state.mon_choix_actuel == formation:
-                    st.write("✅ Accepté provisoirement")
-                    if st.button("❌ Renoncer finalement", key=f"renonc_{formation}"):
+    for nom, data in liste_triee:
+        statut = data['statut']
+        flag = data['zone'].split(" ")[0]
+        
+        # Couleur de la bordure selon le statut
+        couleur = "green" if "OUI" in statut else "blue" if statut == "EN ATTENTE" else "red"
+        
+        with st.expander(f"{flag} {nom}  --  {statut}", expanded=True):
+            c1, c2 = st.columns([2, 1])
+            
+            with c1: # Informations
+                st.caption(f"Regroupement : {data['groupe']}")
+                
+                if "OUI" in statut:
+                    st.success(f"🎉 **ADMISSION PROPOSÉE : {statut}**")
+                    if statut == "OUI-SI":
+                        st.warning("Attention : Remise à niveau obligatoire.")
+                
+                elif statut == "EN ATTENTE":
+                    st.info("⏳ **EN LISTE D'ATTENTE**")
+                    rang = data['details']['rang']
+                    dernier = data['details']['dernier_admis']
+                    places_restantes = rang - dernier
+                    
+                    st.write(f"Ton classement : **{rang}**")
+                    st.write(f"Dernier candidat appelé : **{dernier}**")
+                    st.markdown(f"👉 Il reste **{places_restantes}** places à remonter.")
+                    
+                    # Barre de progression visuelle
+                    if rang > 0:
+                        prog = min(1.0, dernier / rang)
+                        st.progress(prog)
+                
+                elif statut == "REFUS":
+                    st.error("⛔ **NON RETENU**")
+                    st.caption("L'établissement n'a pas retenu ta candidature.")
+
+            with c2: # Boutons d'action
+                # Cas : C'est mon choix actuel
+                if st.session_state.mon_choix_actuel == nom:
+                    if st.button("❌ Renoncer", key=f"renonc_{nom}"):
                         st.session_state.mon_choix_actuel = None
                         st.rerun()
 
-                # CAS 2 : Proposition disponible (OUI ou OUI-SI) et pas encore choisie
-                elif statut in ["OUI", "OUI-SI"]:
-                    col_a, col_b = st.columns(2)
-                    if col_a.button("Accepter", key=f"acc_{formation}"):
-                        # Règle d'écrasement
-                        ancien = st.session_state.mon_choix_actuel
-                        st.session_state.mon_choix_actuel = formation
-                        if ancien:
-                            st.toast(f"⚠️ Attention : Tu as perdu '{ancien}' en acceptant celle-ci !", icon="🔄")
-                        else:
-                            st.toast("Félicitations ! Pense à maintenir tes vœux en attente si tu veux.", icon="🎉")
+                # Cas : Proposition disponible
+                elif "OUI" in statut:
+                    if st.button("✅ Accepter (Provisoirement)", key=f"acc_{nom}"):
+                        st.session_state.mon_choix_actuel = nom
                         st.rerun()
-                    
-                    if col_b.button("Refuser", key=f"ref_{formation}"):
-                        st.session_state.resultats_simules[formation]['statut'] = "REFUS_PAR_ELEVE"
+                    if st.button("🗑️ Refuser définitivement", key=f"ref_{nom}"):
+                        st.session_state.resultats_simules[nom]['statut'] = "REFUSÉ PAR L'ÉLÈVE"
                         st.rerun()
 
-                # CAS 3 : En attente
+                # Cas : En attente
                 elif statut == "EN ATTENTE":
-                    st.write("Vœu maintenu automatiquement.")
-                    if st.button("🗑️ Renoncer (Je ne veux plus attendre)", key=f"att_renonc_{formation}"):
-                         st.session_state.resultats_simules[formation]['statut'] = "REFUS_PAR_ELEVE"
-                         st.rerun()
-                
-                # CAS 4 : Refus par l'établissement ou par l'élève
-                elif statut == "REFUS":
-                    st.write("❌ Formation non disponible")
-                elif statut == "REFUS_PAR_ELEVE":
-                    st.write("🗑️ Tu as renoncé à ce vœu.")
+                    if st.button("🚪 Démissionner (Stop)", key=f"dem_{nom}"):
+                        st.session_state.resultats_simules[nom]['statut'] = "REFUSÉ PAR L'ÉLÈVE"
+                        st.rerun()
 
     st.divider()
-    if st.button("🔄 Recommencer l'entraînement (Reset)"):
+    if st.button("🔄 Nouvelle Simulation (Reset Complet)"):
         reset_simulation()
         st.rerun()
