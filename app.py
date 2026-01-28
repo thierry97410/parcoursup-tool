@@ -1,85 +1,131 @@
 import streamlit as st
 
 # Configuration de la page
-st.set_page_config(page_title="Simulateur Parcoursup 974", page_icon="🇷🇪")
+st.set_page_config(page_title="Simulateur Complet Parcoursup 974", page_icon="🇷🇪", layout="wide")
 
-# En-tête
-st.title("🇷🇪 Mon Simulateur de Choix")
-st.markdown("### Spécial Parents & Élèves - La Réunion")
-st.info("Ce simulateur ne stocke aucune donnée. Une fois la page fermée, tout s'efface.")
+# --- INITIALISATION DE LA MÉMOIRE (SESSION STATE) ---
+# C'est ici qu'on stocke la liste des vœux pour ne pas les perdre quand on clique
+if 'mes_voeux' not in st.session_state:
+    st.session_state.mes_voeux = []
 
-st.divider()
+# --- FONCTIONS ---
+def ajouter_voeu(nom, type_voeu):
+    st.session_state.mes_voeux.append({
+        "nom": nom,
+        "type": type_voeu,
+        "statut": "En attente" # Au début, tout le monde est en attente
+    })
 
-# --- ÉTAPE 1 : LA SITUATION ---
-st.header("1. La proposition du jour")
+def reset_simulation():
+    st.session_state.mes_voeux = []
 
-# Champ de saisie pour le nom de la formation
-nouvelle_formation = st.text_input(
-    "Quelle est la formation qu'on vous propose CE MATIN ?",
-    placeholder="Ex: BTS SIO au Lycée Rolland Garros"
-)
+# --- INTERFACE ---
+st.title("🇷🇪 Pilotage Parcoursup - La Réunion")
+st.markdown("### Simulateur de gestion de liste de vœux")
+st.info("Ajoutez vos vœux à gauche, puis changez leur statut pour voir comment réagir.")
 
-# On bloque la suite tant que rien n'est écrit
-if not nouvelle_formation:
-    st.warning("👈 Commencez par entrer le nom de la formation reçue ci-dessus.")
-    st.stop()  # Arrête le script ici tant que c'est vide
-
-st.success(f"D'accord, analysons la proposition : **{nouvelle_formation}**")
-
-# --- ÉTAPE 2 : L'ANALYSE ---
-st.header("2. Votre ressenti")
-avis = st.radio(
-    f"Est-ce que **{nouvelle_formation}** vous plaît ?",
-    ("Non, ça ne m'intéresse pas", "Oui, c'est mon vœu favori", "Oui, mais j'hésite")
-)
-
-if avis == "Non, ça ne m'intéresse pas":
-    st.error(f"🛑 **Conseil : RENONCER à {nouvelle_formation}**")
-    st.write("Ne bloquez pas la place. En renonçant, vous libérez une place pour un autre élève.")
-
-elif avis == "Oui, c'est mon vœu favori":
-    st.balloons()
-    st.success(f"🎉 **Conseil : ACCEPTER DÉFINITIVEMENT {nouvelle_formation}**")
-    st.write("Félicitations ! La procédure est finie. Pensez à l'inscription administrative.")
-
-elif avis == "Oui, mais j'hésite":
-    # --- ÉTAPE 3 : LE PANIER ---
-    st.header("3. Comparaison avec le panier")
+# --- BARRE LATÉRALE : SAISIE DES VŒUX ---
+with st.sidebar:
+    st.header("1. Saisir mes vœux")
+    st.caption("Entrez ici toute votre liste de vœux confirmés.")
     
-    a_deja_formation = st.radio(
-        "Aviez-vous DÉJÀ accepté une autre proposition les jours d'avant ?",
-        ("Non, mon panier est vide", "Oui, j'ai déjà un vœu en attente")
-    )
-    
-    if a_deja_formation == "Oui, j'ai déjà un vœu en attente":
-        ancienne_formation = st.text_input(
-            "Quel est le nom de cette formation que vous gardez au chaud ?",
-            placeholder="Ex: Licence Droit à la fac du Moufia"
-        )
+    with st.form("ajout_voeu"):
+        nom_voeu = st.text_input("Nom de la formation", placeholder="Ex: BTS SIO - Le Tampon")
+        type_voeu = st.radio("Type de formation", ["Sélective (BTS, BUT, CPGE...)", "Non Sélective (Licence, PASS...)"])
+        submit = st.form_submit_button("Ajouter ce vœu")
         
-        if ancienne_formation:
-            st.warning("⚖️ **LE DUEL FINAL**")
-            st.write("Vous ne pouvez garder qu'une seule place. Vous devez choisir maintenant entre :")
-            
-            col1, col2 = st.columns(2)
-            with col1:
-                st.info(f"🥊 L'ancienne :\n**{ancienne_formation}**")
-            with col2:
-                st.success(f"🥊 La nouvelle :\n**{nouvelle_formation}**")
-                
-            choix_final = st.radio("Qui gagne le duel ?", (ancienne_formation, nouvelle_formation))
-            
-            if choix_final == nouvelle_formation:
-                st.write(f"👉 **Action :** Acceptez **{nouvelle_formation}**. Le système libérera automatiquement {ancienne_formation}.")
-            else:
-                st.write(f"👉 **Action :** Refusez **{nouvelle_formation}**. Vous gardez {ancienne_formation} en sécurité.")
-                
-            st.caption("⚠️ N'oubliez pas de cocher 'Maintenir mes vœux en attente' si vous attendez encore d'autres réponses !")
-            
-    else:
-        st.success(f"✅ **Conseil : ACCEPTER {nouvelle_formation}**")
-        st.write(f"Mettez **{nouvelle_formation}** dans votre panier pour sécuriser la place.")
-        st.caption("⚠️ Important : Cochez bien 'Maintenir mes vœux en attente' pour ne pas perdre vos autres vœux !")
+        if submit and nom_voeu:
+            ajouter_voeu(nom_voeu, type_voeu)
+            st.success(f"Vœu '{nom_voeu}' ajouté !")
 
-st.divider()
-st.caption("Rappel : Les délais de réponse sont souvent en Heure de Paris. Ne validez pas au dernier moment !")
+    st.divider()
+    if st.button("🗑️ Tout effacer et recommencer"):
+        reset_simulation()
+        st.rerun()
+
+# --- ZONE PRINCIPALE : LE TABLEAU DE BORD ---
+st.header("2. Mon Tableau de Bord")
+
+if not st.session_state.mes_voeux:
+    st.warning("👈 Commencez par ajouter des vœux dans le menu de gauche !")
+else:
+    # On affiche la liste
+    col1, col2 = st.columns([2, 1])
+    
+    nb_oui_momentane = 0
+    nb_oui_definitif = 0
+    
+    # On parcourt la liste des vœux pour créer les contrôles
+    for i, voeu in enumerate(st.session_state.mes_voeux):
+        with st.container():
+            c1, c2, c3 = st.columns([3, 2, 2])
+            
+            # Nom et Type
+            with c1:
+                st.subheader(f"{i+1}. {voeu['nom']}")
+                if "Non Sélective" in voeu['type']:
+                    st.caption("🟢 Formation Non Sélective")
+                else:
+                    st.caption("🔴 Formation Sélective")
+            
+            # Sélecteur de statut (Simulation)
+            with c2:
+                nouveau_statut = st.selectbox(
+                    "État ce matin :",
+                    ["En attente", "Proposition d'admission", "Refusé", "J'ai ACCEPTÉ cette proposition", "J'ai RENONCÉ"],
+                    key=f"statut_{i}",
+                    index=["En attente", "Proposition d'admission", "Refusé", "J'ai ACCEPTÉ cette proposition", "J'ai RENONCÉ"].index(voeu['statut'])
+                )
+                # Mise à jour de la mémoire
+                st.session_state.mes_voeux[i]['statut'] = nouveau_statut
+
+            # Analyse immédiate par ligne
+            with c3:
+                if nouveau_statut == "Proposition d'admission":
+                    st.info("🔔 **Action :** Vous pouvez accepter ou refuser.")
+                elif nouveau_statut == "Refusé":
+                    if "Non Sélective" in voeu['type']:
+                        st.error("Bizarre... Une non-sélective ne peut pas refuser (sauf si capacités atteintes). Vérifiez.")
+                    else:
+                        st.error("❌ C'est fini pour ce vœu.")
+                elif nouveau_statut == "J'ai ACCEPTÉ cette proposition":
+                    st.success("✅ Vœu gardé (Panier)")
+                    nb_oui_momentane += 1
+                elif nouveau_statut == "J'ai RENONCÉ":
+                    st.write("🗑️ Abandonné")
+
+            st.divider()
+
+    # --- ÉTAPE 3 : ANALYSE GLOBALE (LE CERVEAU DU PSYEN) ---
+    st.header("3. Analyse de votre situation")
+    
+    # Règle du Panier Unique
+    if nb_oui_momentane > 1:
+        st.error("🚨 **ALERTE ROUGE : ILLÉGAL !**")
+        st.markdown(f"""
+        Vous avez mis **"J'ai ACCEPTÉ"** sur {nb_oui_momentane} formations différentes.
+        
+        🛑 **Règle absolue :** Vous ne pouvez garder qu'**UNE SEULE** proposition à la fois.
+        👉 Vous devez renoncer aux autres immédiatement, sinon Parcoursup annulera tout.
+        """)
+    
+    elif nb_oui_momentane == 1:
+        st.success("✅ **Situation Valide**")
+        st.markdown("""
+        Vous avez 1 formation dans votre panier. C'est parfait.
+        
+        👉 **Conseil Stratégique :**
+        Si vous avez d'autres vœux qui sont encore "En attente" et qui vous intéressent, **n'oubliez pas de cocher "Maintenir mes vœux en attente"** lors de la validation !
+        """)
+        
+    elif nb_oui_momentane == 0:
+        # Vérifions s'il y a des propositions en attente de réponse
+        propositions_dispo = [v for v in st.session_state.mes_voeux if v['statut'] == "Proposition d'admission"]
+        
+        if len(propositions_dispo) > 1:
+            st.warning("⚖️ **Le Duel !**")
+            st.write(f"Vous avez {len(propositions_dispo)} propositions sur la table. Vous devez en choisir **UNE SEULE** à accepter. Les autres devront être refusées.")
+        elif len(propositions_dispo) == 1:
+            st.info("👉 Vous avez une proposition. Si elle vous plaît, acceptez-la pour sécuriser.")
+        else:
+            st.write("⏳ En attente de propositions...")
