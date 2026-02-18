@@ -1302,8 +1302,13 @@ elif st.session_state.etape == "VOEUX":
             and (dom_f == "Tous" or v.get("domaine") == dom_f)
         }
 
+        if not formations_filtrées:
+            st.warning("Aucune formation ne correspond à ces filtres. Élargis ta recherche.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            st.stop()
+
         formation_sel = st.selectbox("Choisir une formation", list(formations_filtrées.keys()))
-        info = CATALOGUE[formation_sel]
+        info = formations_filtrées[formation_sel]
 
         # Fiche formation
         score_pred = calculer_score_admission(formation_sel, profil)
