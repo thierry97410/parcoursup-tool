@@ -337,95 +337,458 @@ except:
 # 3. CATALOGUE FORMATIONS 2025
 # ==========================================
 CATALOGUE = {
-    # ===== RÉUNION =====
+
+    # ============================================================
+    # RÉUNION — LICENCES
+    # ============================================================
     "Licence Droit — Université de La Réunion": {
-        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [],
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Droit & Sciences Po",
         "selectivite": "Modérée", "profil_ideal": "TB en Histoire-Géo, Philo, Français",
-        "debouches": "Avocat, Magistrat, Notaire, Juriste d'entreprise",
-        "capacite": 280, "taux_acces": 62
+        "debouches": "Avocat, Magistrat, Notaire, Juriste d'entreprise", "capacite": 280, "taux_acces": 62
     },
     "Licence Psychologie — Université de La Réunion": {
-        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [],
-        "selectivite": "Élevée", "profil_ideal": "TB en SVT, Philo. Bonne moyenne générale",
-        "debouches": "Psychologue, RH, Éducateur spécialisé",
-        "capacite": 120, "taux_acces": 38
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences Humaines",
+        "selectivite": "Élevée", "profil_ideal": "SVT, Philo, SES. Bonne moyenne générale",
+        "debouches": "Psychologue, RH, Éducateur spécialisé", "capacite": 120, "taux_acces": 38
+    },
+    "Licence Sociologie — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences Humaines",
+        "selectivite": "Faible", "profil_ideal": "SES, HGGSP, ouverture aux sciences sociales",
+        "debouches": "Chargé d'études, Animateur socioculturel, Travailleur social", "capacite": 150, "taux_acces": 72
+    },
+    "Licence Histoire — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Lettres & Sciences Humaines",
+        "selectivite": "Faible", "profil_ideal": "Passion pour l'histoire, HGGSP, Humanités",
+        "debouches": "Enseignant, Archiviste, Journaliste, Musées", "capacite": 130, "taux_acces": 75
+    },
+    "Licence Géographie & Aménagement — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences Humaines",
+        "selectivite": "Faible", "profil_ideal": "HGGSP, curiosité environnementale et territoriale",
+        "debouches": "Urbaniste, Cartographe, Géomaticien, Aménagement du territoire", "capacite": 100, "taux_acces": 78
+    },
+    "Licence LLCER Anglais — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Lettres & Langues",
+        "selectivite": "Faible", "profil_ideal": "Excellent niveau en anglais, LLCE ou LV1/LV2",
+        "debouches": "Traducteur, Enseignant, Commerce international", "capacite": 90, "taux_acces": 80
+    },
+    "Licence Lettres Modernes — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Lettres & Langues",
+        "selectivite": "Faible", "profil_ideal": "Humanités, Français, passion littérature",
+        "debouches": "Enseignant, Journaliste, Edition, Communication", "capacite": 100, "taux_acces": 80
+    },
+    "Licence Sciences de l'Éducation — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences Humaines",
+        "selectivite": "Faible", "profil_ideal": "Goût pour la pédagogie, SES ou Philo",
+        "debouches": "Formateur, Conseiller pédagogique, Éducateur", "capacite": 120, "taux_acces": 74
+    },
+    "Licence AES (Administration Économique et Sociale) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Économie & Gestion",
+        "selectivite": "Faible", "profil_ideal": "SES, profil polyvalent gestion/social",
+        "debouches": "Ressources Humaines, Administration, Travail social", "capacite": 140, "taux_acces": 73
+    },
+    "Licence Économie-Gestion — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Économie & Gestion",
+        "selectivite": "Modérée", "profil_ideal": "SES + Maths. Esprit analytique",
+        "debouches": "Économiste, Contrôleur de gestion, Analyste", "capacite": 200, "taux_acces": 60
     },
     "Licence STAPS — Université de La Réunion": {
-        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [],
-        "selectivite": "Modérée", "profil_ideal": "Pratique sportive, SVT, EPS",
-        "debouches": "Professeur EPS, Kinésithérapeute, Coach sportif",
-        "capacite": 180, "taux_acces": 55
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sport & Santé",
+        "selectivite": "Modérée", "profil_ideal": "Pratique sportive régulière, SVT",
+        "debouches": "Professeur EPS, Kinésithérapeute, Coach sportif", "capacite": 180, "taux_acces": 55
     },
-    "BTS MCO — Lycée Bellepierre (St-Denis)": {
-        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [],
-        "selectivite": "Faible", "profil_ideal": "Bac STMG, sens commercial",
-        "debouches": "Manager commercial, Responsable d'unité",
-        "capacite": 60, "taux_acces": 78
+    "Licence Biologie — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences",
+        "selectivite": "Modérée", "profil_ideal": "SVT + Maths ou PC. Solide en sciences",
+        "debouches": "Chercheur, Biologiste, Industrie pharmaceutique", "capacite": 160, "taux_acces": 58
     },
-    "BTS SIO — Lycée Roland Garros (Le Tampon)": {
-        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [],
-        "selectivite": "Faible", "profil_ideal": "Bac techno ou général avec NSI/Maths",
-        "debouches": "Développeur, Technicien réseau, Admin systèmes",
-        "capacite": 48, "taux_acces": 80
+    "Licence Chimie — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences",
+        "selectivite": "Modérée", "profil_ideal": "Physique-Chimie + Maths obligatoires",
+        "debouches": "Chimiste, Ingénieur procédés, Cosmétique, Agroalimentaire", "capacite": 90, "taux_acces": 60
     },
-    "BUT Techniques de Commercialisation — IUT St-Pierre": {
-        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [],
-        "selectivite": "Modérée", "profil_ideal": "Bac général, moyenne ≥ 12, esprit analytique",
-        "debouches": "Chef de projet marketing, Commercial B2B",
-        "capacite": 72, "taux_acces": 50
+    "Licence Physique — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences",
+        "selectivite": "Modérée", "profil_ideal": "Maths + Physique-Chimie solides",
+        "debouches": "Ingénieur, Chercheur, Enseignant", "capacite": 80, "taux_acces": 58
     },
-    "CPGE Scientifique — Réunion": {
+    "Licence Informatique — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Modérée", "profil_ideal": "Maths + NSI très appréciés",
+        "debouches": "Développeur, Data Scientist, Ingénieur logiciel", "capacite": 100, "taux_acces": 52
+    },
+    "Licence Mathématiques — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences",
+        "selectivite": "Modérée", "profil_ideal": "Excellent en Maths, rigueur analytique",
+        "debouches": "Enseignant, Actuaire, Data Analyst, Finance", "capacite": 80, "taux_acces": 55
+    },
+
+    # ============================================================
+    # RÉUNION — BTS
+    # ============================================================
+    "BTS MCO (Management Commercial Opérationnel) — Lycée Bellepierre": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Commerce & Gestion",
+        "selectivite": "Faible", "profil_ideal": "Bac STMG ou général, sens commercial",
+        "debouches": "Manager commercial, Responsable rayon, Entrepreneur", "capacite": 60, "taux_acces": 78
+    },
+    "BTS NDRC (Négociation et Digitalisation Relation Client) — Réunion": {
         "zone": "🇷🇪 Réunion", "type": "multiple",
         "sous_voeux": [
-            "MPSI — Lycée Leconte de Lisle (St-Denis)",
-            "PCSI — Lycée Leconte de Lisle (St-Denis)",
-            "PCSI — Lycée Roland Garros (Le Tampon)"
+            "BTS NDRC — Lycée Bellepierre (St-Denis)",
+            "BTS NDRC — Lycée Ambroise Vollard (St-Pierre)",
         ],
-        "selectivite": "Très élevée", "profil_ideal": "TB ou B en Maths, Physique. Moyenne ≥ 15",
-        "debouches": "Grandes Écoles d'Ingénieurs",
-        "capacite": 35, "taux_acces": 22
+        "domaine": "Commerce & Gestion",
+        "selectivite": "Faible", "profil_ideal": "Commercial, digital, relation client",
+        "debouches": "Commercial B2B, Téléconseiller, Business Developer", "capacite": 60, "taux_acces": 76
     },
-    "IFSI — Soins Infirmiers (974)": {
+    "BTS Comptabilité et Gestion (CG) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "multiple",
+        "sous_voeux": [
+            "BTS CG — Lycée Leconte de Lisle (St-Denis)",
+            "BTS CG — Lycée Ambroise Vollard (St-Pierre)",
+            "BTS CG — Lycée Mahatma Gandhi (St-André)"
+        ],
+        "domaine": "Commerce & Gestion",
+        "selectivite": "Faible", "profil_ideal": "STMG ou général, rigueur, goût chiffres",
+        "debouches": "Comptable, Assistant de gestion, Contrôleur", "capacite": 54, "taux_acces": 77
+    },
+    "BTS SAM (Support à l'Action Managériale) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "multiple",
+        "sous_voeux": [
+            "BTS SAM — Lycée Le Verger (Ste-Marie)",
+            "BTS SAM — Lycée Bellepierre (St-Denis)"
+        ],
+        "domaine": "Commerce & Gestion",
+        "selectivite": "Faible", "profil_ideal": "Organisation, communication, bureautique",
+        "debouches": "Assistant de direction, Office Manager", "capacite": 48, "taux_acces": 80
+    },
+    "BTS SIO (Services Informatiques aux Organisations) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "multiple",
+        "sous_voeux": [
+            "BTS SIO SLAM — Lycée Roland Garros (Le Tampon)",
+            "BTS SIO SISR — Lycée Roland Garros (Le Tampon)",
+            "BTS SIO SLAM — Lycée Leconte de Lisle (St-Denis)"
+        ],
+        "domaine": "Numérique & Informatique",
+        "selectivite": "Faible", "profil_ideal": "NSI, Maths, curiosité informatique",
+        "debouches": "Développeur, Technicien réseau, Admin systèmes", "capacite": 48, "taux_acces": 80
+    },
+    "BTS SNIR (Systèmes Numériques, Informatique et Réseaux) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Faible", "profil_ideal": "STI2D, Maths, Sciences de l'ingénieur",
+        "debouches": "Technicien réseaux, Électronicien, Maintenance", "capacite": 36, "taux_acces": 82
+    },
+    "BTS GPME (Gestion PME) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Commerce & Gestion",
+        "selectivite": "Faible", "profil_ideal": "Polyvalence gestion, STMG ou général",
+        "debouches": "Assistant PME, Gestionnaire administratif", "capacite": 48, "taux_acces": 79
+    },
+    "BTS Tourisme — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Tourisme & Hôtellerie",
+        "selectivite": "Faible", "profil_ideal": "Langues vivantes, sens de l'accueil, culture générale",
+        "debouches": "Agent de voyage, Responsable tourisme, Guide", "capacite": 36, "taux_acces": 75
+    },
+    "BTS Hôtellerie-Restauration — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Tourisme & Hôtellerie",
+        "selectivite": "Faible", "profil_ideal": "Passion cuisine/service, dynamisme",
+        "debouches": "Chef cuisinier, Responsable salle, Directeur hôtel", "capacite": 48, "taux_acces": 74
+    },
+    "BTS ESF (Économie Sociale et Familiale) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Social & Santé",
+        "selectivite": "Faible", "profil_ideal": "ST2S, sens du social, empathie",
+        "debouches": "Conseiller ESF, CCAS, CAF, associations", "capacite": 30, "taux_acces": 76
+    },
+    "BTS Professions Immobilières — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Commerce & Gestion",
+        "selectivite": "Faible", "profil_ideal": "Droit, SES, sens commercial",
+        "debouches": "Agent immobilier, Gestionnaire de biens", "capacite": 36, "taux_acces": 77
+    },
+    "BTS Communication — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Communication & Média",
+        "selectivite": "Modérée", "profil_ideal": "Créativité, Français, culture digitale",
+        "debouches": "Chargé de communication, Community manager", "capacite": 30, "taux_acces": 58
+    },
+    "BTS Diététique — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Social & Santé",
+        "selectivite": "Élevée", "profil_ideal": "SVT + Chimie, passion alimentation/santé",
+        "debouches": "Diététicien(ne), Nutritionniste, Conseil en entreprise", "capacite": 24, "taux_acces": 40
+    },
+    "BTS Analyse de Biologie Médicale — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Social & Santé",
+        "selectivite": "Élevée", "profil_ideal": "SVT + Chimie. Rigueur scientifique",
+        "debouches": "Technicien de laboratoire médical", "capacite": 24, "taux_acces": 35
+    },
+
+    # ============================================================
+    # RÉUNION — BUT (Bachelor Universitaire de Technologie)
+    # ============================================================
+    "BUT Techniques de Commercialisation — IUT de St-Pierre": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Commerce & Gestion",
+        "selectivite": "Modérée", "profil_ideal": "Maths + SES, esprit analytique, moyenne ≥ 12",
+        "debouches": "Chef de projet marketing, Commercial B2B, Data analyst marketing", "capacite": 72, "taux_acces": 50
+    },
+    "BUT Génie Civil — IUT de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sciences & Ingénierie",
+        "selectivite": "Modérée", "profil_ideal": "Maths + PC ou SI. STI2D bienvenu",
+        "debouches": "Ingénieur BTP, Conducteur de travaux, Urbanisme", "capacite": 60, "taux_acces": 52
+    },
+    "BUT Réseaux & Télécommunications — IUT de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Modérée", "profil_ideal": "Maths + NSI ou STI2D, curiosité technique",
+        "debouches": "Ingénieur réseau, Administrateur système, Cybersécurité", "capacite": 48, "taux_acces": 54
+    },
+    "BUT Informatique — IUT de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Modérée", "profil_ideal": "Maths + NSI. Logique algorithmique",
+        "debouches": "Développeur full-stack, Data Scientist, Ingénieur IA", "capacite": 60, "taux_acces": 50
+    },
+    "BUT Gestion des Entreprises et Administration (GEA) — IUT Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Commerce & Gestion",
+        "selectivite": "Modérée", "profil_ideal": "SES + Maths, esprit de gestion",
+        "debouches": "Contrôleur de gestion, Responsable comptable, RH", "capacite": 60, "taux_acces": 55
+    },
+    "BUT Carrières Sociales — IUT de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Social & Santé",
+        "selectivite": "Modérée", "profil_ideal": "Goût pour le social, empathie, SES",
+        "debouches": "Éducateur spécialisé, Assistant social, Animateur", "capacite": 48, "taux_acces": 48
+    },
+
+    # ============================================================
+    # RÉUNION — FORMATIONS PARAMÉDICALES & SOCIALES
+    # ============================================================
+    "IFSI Soins Infirmiers — Réunion": {
         "zone": "🇷🇪 Réunion", "type": "multiple",
         "sous_voeux": [
             "IFSI — CHU Nord (St-Denis)",
             "IFSI — CHU Sud (St-Pierre)"
         ],
-        "selectivite": "Élevée", "profil_ideal": "SVT, sens du soin, bonne communication",
-        "debouches": "Infirmier(e) hospitalier, libéral, spécialisé",
-        "capacite": 80, "taux_acces": 30
+        "domaine": "Social & Santé",
+        "selectivite": "Élevée", "profil_ideal": "SVT, sens du soin, bonne communication, résistance au stress",
+        "debouches": "Infirmier(e) hospitalier, libéral, spécialisé (IADE, IBODE)", "capacite": 80, "taux_acces": 30
+    },
+    "Formation Aide-Soignant(e) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "multiple",
+        "sous_voeux": [
+            "IFAS — CHU Nord (St-Denis)",
+            "IFAS — CHU Sud (St-Pierre)",
+            "IFAS — Clinique Jeanne d'Arc"
+        ],
+        "domaine": "Social & Santé",
+        "selectivite": "Modérée", "profil_ideal": "Empathie, ST2S apprécié, motivation pour le soin",
+        "debouches": "Aide-soignant(e) en EHPAD, hôpital, domicile", "capacite": 100, "taux_acces": 45
+    },
+    "BTS SP3S (Services et Prestations des Secteurs Sanitaire et Social)": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Social & Santé",
+        "selectivite": "Faible", "profil_ideal": "ST2S, sens du social et de l'organisation",
+        "debouches": "Coordinateur secteur médico-social, Gestionnaire EHPAD", "capacite": 36, "taux_acces": 72
+    },
+    "BPJEPS Animation — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Sport & Social",
+        "selectivite": "Faible", "profil_ideal": "Dynamisme, sens de l'animation, BAFA apprécié",
+        "debouches": "Animateur socioculturel, Responsable structure jeunesse", "capacite": 40, "taux_acces": 75
     },
 
-    # ===== MÉTROPOLE =====
-    "Licence Droit — Université Paris Panthéon-Assas": {
-        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [],
-        "selectivite": "Élevée", "profil_ideal": "Excellents résultats, mention TB recommandée",
-        "debouches": "Avocat, Magistrat, Notaire (Paris)",
-        "capacite": 350, "taux_acces": 40
+    # ============================================================
+    # RÉUNION — CPGE
+    # ============================================================
+    "CPGE Scientifique — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "multiple",
+        "sous_voeux": [
+            "MPSI — Lycée Leconte de Lisle (St-Denis)",
+            "PCSI — Lycée Leconte de Lisle (St-Denis)",
+            "PCSI — Lycée Roland Garros (Le Tampon)",
+            "MP2I — Lycée Leconte de Lisle (St-Denis)"
+        ],
+        "domaine": "Classes Préparatoires",
+        "selectivite": "Très élevée", "profil_ideal": "TB ou B en Maths + PC. Moyenne ≥ 15. Mention TB conseillée",
+        "debouches": "Grandes Écoles d'Ingénieurs (CentraleSupélec, Mines, Ponts...)", "capacite": 35, "taux_acces": 22
+    },
+    "CPGE Économique et Commerciale (ECG) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "multiple",
+        "sous_voeux": [
+            "ECG — Lycée Leconte de Lisle (St-Denis)",
+            "ECG — Lycée Roland Garros (Le Tampon)"
+        ],
+        "domaine": "Classes Préparatoires",
+        "selectivite": "Très élevée", "profil_ideal": "Maths + SES ou Histoire. Profil polyvalent. Mention TB",
+        "debouches": "HEC, ESSEC, EM Lyon, Grandes Écoles de Commerce", "capacite": 30, "taux_acces": 25
+    },
+
+    # ============================================================
+    # RÉUNION — DIVERS
+    # ============================================================
+    "École d'Architecture de La Réunion (ENSA)": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Arts & Architecture",
+        "selectivite": "Élevée", "profil_ideal": "Arts plastiques, Maths, portfolio requis",
+        "debouches": "Architecte DPLG, Urbaniste, Designer d'espace", "capacite": 60, "taux_acces": 35
+    },
+    "Formation Éducateur Spécialisé — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Social & Santé",
+        "selectivite": "Modérée", "profil_ideal": "Empathie, résistance, engagement social",
+        "debouches": "Éducateur spécialisé en IME, ITEP, protection de l'enfance", "capacite": 50, "taux_acces": 42
+    },
+
+    # ============================================================
+    # MÉTROPOLE — LICENCES
+    # ============================================================
+    "Licence Droit — Université Paris Panthéon-Assas (Paris 2)": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Droit & Sciences Po",
+        "selectivite": "Élevée", "profil_ideal": "Mention TB recommandée. Excellents résultats",
+        "debouches": "Avocat, Magistrat, Notaire (Paris)", "capacite": 350, "taux_acces": 40
+    },
+    "Licence Droit — Université de Bordeaux": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Droit & Sciences Po",
+        "selectivite": "Modérée", "profil_ideal": "TB en Histoire, Philo. Rédaction soignée",
+        "debouches": "Avocat, Juriste, Notaire, Fonctionnaire catégorie A", "capacite": 400, "taux_acces": 55
+    },
+    "Licence Psychologie — Université Lyon 2 Lumière": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Sciences Humaines",
+        "selectivite": "Élevée", "profil_ideal": "SVT + Philo + SES. Dossier très sélectif",
+        "debouches": "Psychologue clinicien, scolaire, du travail", "capacite": 200, "taux_acces": 35
+    },
+    "Licence Psychologie — Université Rennes 2": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Sciences Humaines",
+        "selectivite": "Élevée", "profil_ideal": "SVT + Philo, motivation pour la clinique",
+        "debouches": "Psychologue, Neuropsychologue, Chargé d'insertion", "capacite": 180, "taux_acces": 37
+    },
+    "Licence STAPS — Université de Montpellier": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Sport & Santé",
+        "selectivite": "Modérée", "profil_ideal": "Pratique sportive de haut niveau souhaitée, SVT",
+        "debouches": "Entraîneur, Kinésithérapeute, Préparateur physique", "capacite": 250, "taux_acces": 52
     },
     "Licence Informatique — Université de Bordeaux": {
-        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [],
-        "selectivite": "Modérée", "profil_ideal": "Maths, NSI obligatoires. Logique algorithmique",
-        "debouches": "Développeur, Data Scientist, Ingénieur IA",
-        "capacite": 160, "taux_acces": 48
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Modérée", "profil_ideal": "Maths + NSI obligatoires. Logique algorithmique",
+        "debouches": "Développeur, Data Scientist, Ingénieur IA", "capacite": 160, "taux_acces": 48
     },
-    "Licence Psychologie — Université Lyon 2": {
-        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [],
-        "selectivite": "Élevée", "profil_ideal": "SVT + Philo + SES. Dossier très sélectif",
-        "debouches": "Psychologue clinicien, scolaire, du travail",
-        "capacite": 200, "taux_acces": 35
+    "Licence Informatique — Université Paris Cité": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Élevée", "profil_ideal": "Excellent en Maths + NSI. Paris très sélectif",
+        "debouches": "Développeur, Chercheur, Ingénieur IA, Data Engineer", "capacite": 120, "taux_acces": 38
     },
-    "CPGE Littéraire (AL) — Paris & IDF": {
+    "Licence Mathématiques — Université de Paris-Saclay": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Sciences",
+        "selectivite": "Très élevée", "profil_ideal": "Niveau d'excellence en Maths. Mention TB exigée",
+        "debouches": "Recherche, Finance quantitative, Actuaire, Data Science", "capacite": 150, "taux_acces": 25
+    },
+    "Licence Physique-Chimie — Université de Strasbourg": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Sciences",
+        "selectivite": "Modérée", "profil_ideal": "PC + Maths indispensables",
+        "debouches": "Ingénieur, Chercheur, Chimiste industriel", "capacite": 160, "taux_acces": 50
+    },
+    "Licence SVT — Université Claude Bernard Lyon 1": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Sciences",
+        "selectivite": "Modérée", "profil_ideal": "SVT + Maths ou PC. Projet scientifique clair",
+        "debouches": "Enseignant, Chercheur, Environnement, Médecine (passerelle)", "capacite": 200, "taux_acces": 55
+    },
+    "Licence SES — Université Paris 1 Panthéon-Sorbonne": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Économie & Gestion",
+        "selectivite": "Élevée", "profil_ideal": "SES + Maths. Profil analytique. Sorbonne très sélective",
+        "debouches": "Économiste, Chargé d'études, Finance, Recherche", "capacite": 250, "taux_acces": 38
+    },
+    "Licence AES — Université de Nantes": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Économie & Gestion",
+        "selectivite": "Faible", "profil_ideal": "Profil polyvalent, goût gestion et social",
+        "debouches": "RH, Administration, Travail social, Collectivités", "capacite": 220, "taux_acces": 68
+    },
+    "Licence Histoire — Université de Bordeaux Montaigne": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Lettres & Sciences Humaines",
+        "selectivite": "Faible", "profil_ideal": "Passion pour l'histoire, HGGSP, culture générale",
+        "debouches": "Enseignant, Journaliste, Patrimoine, Archiviste", "capacite": 250, "taux_acces": 72
+    },
+    "Licence Géographie — Université de Toulouse Jean Jaurès": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Sciences Humaines",
+        "selectivite": "Faible", "profil_ideal": "HGGSP, curiosité pour l'environnement et les territoires",
+        "debouches": "Urbaniste, Géomaticien, Aménagement territorial", "capacite": 200, "taux_acces": 70
+    },
+
+    # ============================================================
+    # MÉTROPOLE — BTS & BUT
+    # ============================================================
+    "BUT Informatique — IUT Paris-Rives de Seine": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Élevée", "profil_ideal": "Maths + NSI. Très sélectif à Paris",
+        "debouches": "Développeur, DevOps, Chef de projet SI", "capacite": 80, "taux_acces": 30
+    },
+    "BUT Informatique — IUT de Bordeaux": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Numérique & Informatique",
+        "selectivite": "Modérée", "profil_ideal": "Maths + NSI appréciés",
+        "debouches": "Développeur, Data Engineer, Chef de projet numérique", "capacite": 100, "taux_acces": 48
+    },
+    "BUT MMI (Métiers Multimédias et Internet) — France": {
+        "zone": "🇫🇷 Métropole", "type": "multiple",
+        "sous_voeux": [
+            "BUT MMI — IUT Bordeaux Montaigne",
+            "BUT MMI — IUT Nancy-Charlemagne",
+            "BUT MMI — IUT de Tours",
+            "BUT MMI — IUT de Troyes"
+        ],
+        "domaine": "Communication & Média",
+        "selectivite": "Modérée", "profil_ideal": "Créativité + maîtrise digitale + curiosité web",
+        "debouches": "Développeur web, UX Designer, Community manager, Journaliste numérique", "capacite": 90, "taux_acces": 45
+    },
+    "BTS Communication — Métropole": {
+        "zone": "🇫🇷 Métropole", "type": "multiple",
+        "sous_voeux": [
+            "BTS Communication — Lycée Dorian (Paris)",
+            "BTS Communication — Lycée Fresnel (Paris)",
+            "BTS Communication — Lycée Émile Zola (Rennes)"
+        ],
+        "domaine": "Communication & Média",
+        "selectivite": "Modérée", "profil_ideal": "Créativité, Français, culture digitale, dossier artistique",
+        "debouches": "Chargé de communication, Community manager, Publicitaire", "capacite": 35, "taux_acces": 45
+    },
+    "BTS Design Graphique — Métropole": {
+        "zone": "🇫🇷 Métropole", "type": "multiple",
+        "sous_voeux": [
+            "BTS Design Graphique — ESAIP (Paris)",
+            "BTS Design Graphique — Lycée des Métiers d'Art (Lyon)",
+            "BTS Design Graphique — Lycée Touchard (Le Mans)"
+        ],
+        "domaine": "Arts & Architecture",
+        "selectivite": "Élevée", "profil_ideal": "Portfolio requis. Arts plastiques. Maîtrise logiciels graphiques",
+        "debouches": "Graphiste, Directeur artistique, Motion designer", "capacite": 30, "taux_acces": 32
+    },
+
+    # ============================================================
+    # MÉTROPOLE — CPGE & GRANDES ÉCOLES
+    # ============================================================
+    "CPGE Scientifique (MPSI/PCSI/MP2I) — Paris & IDF": {
+        "zone": "🇫🇷 Métropole", "type": "multiple",
+        "sous_voeux": [
+            "MPSI — Lycée Louis-le-Grand (Paris)",
+            "MPSI — Lycée Pierre de Fermat (Toulouse)",
+            "PCSI — Lycée Chaptal (Paris)",
+            "MP2I — Lycée Carnot (Paris)",
+            "MPSI — Lycée Kléber (Strasbourg)"
+        ],
+        "domaine": "Classes Préparatoires",
+        "selectivite": "Très élevée", "profil_ideal": "Mention TB exigée. Excellence en Maths + PC. Classement top 5%",
+        "debouches": "Polytechnique, CentraleSupélec, Mines ParisTech, Ponts", "capacite": 48, "taux_acces": 15
+    },
+    "CPGE Économique et Commerciale (ECG) — Métropole": {
+        "zone": "🇫🇷 Métropole", "type": "multiple",
+        "sous_voeux": [
+            "ECG — Lycée Henri IV (Paris)",
+            "ECG — Lycée Carnot (Paris)",
+            "ECG — Lycée Thiers (Marseille)",
+            "ECG — Lycée du Parc (Lyon)"
+        ],
+        "domaine": "Classes Préparatoires",
+        "selectivite": "Très élevée", "profil_ideal": "Maths + SES ou Histoire. Polyvalence. Mention TB",
+        "debouches": "HEC Paris, ESSEC, ESCP, EM Lyon, Audencia", "capacite": 45, "taux_acces": 18
+    },
+    "CPGE Littéraire (AL/BL) — Métropole": {
         "zone": "🇫🇷 Métropole", "type": "multiple",
         "sous_voeux": [
             "AL — Lycée Henri IV (Paris)",
             "AL — Lycée Fénelon (Paris)",
             "AL — Lycée Lakanal (Sceaux)",
+            "BL — Lycée Hoche (Versailles)",
             "AL — Lycée Chaptal (Paris)"
         ],
-        "selectivite": "Très élevée", "profil_ideal": "TB en Lettres, Philo, Langues. Mention TB",
-        "debouches": "ENS, Sciences Po, Journalisme, Haute Fonction Publique",
-        "capacite": 40, "taux_acces": 18
+        "domaine": "Classes Préparatoires",
+        "selectivite": "Très élevée", "profil_ideal": "TB en Lettres, Philo, Langues. Mention TB absolument nécessaire",
+        "debouches": "ENS Ulm, ENS Lyon, Sciences Po Paris, Hautes fonctions publiques", "capacite": 40, "taux_acces": 18
     },
     "Sciences Po — Réseau IEP (Concours Commun)": {
         "zone": "🇫🇷 Métropole", "type": "multiple",
@@ -434,29 +797,79 @@ CATALOGUE = {
             "IEP Sciences Po Lyon",
             "IEP Sciences Po Rennes",
             "IEP Sciences Po Toulouse",
-            "IEP Sciences Po Grenoble"
+            "IEP Sciences Po Grenoble",
+            "IEP Sciences Po Aix-en-Provence"
         ],
-        "selectivite": "Très élevée", "profil_ideal": "Profil polyvalent, culture générale, SES, Histoire",
-        "debouches": "Diplomatie, Hauts fonctionnaires, Journalisme, ONG",
-        "capacite": 300, "taux_acces": 20
+        "domaine": "Droit & Sciences Po",
+        "selectivite": "Très élevée", "profil_ideal": "Profil polyvalent, culture générale excellente, SES + Histoire",
+        "debouches": "Diplomatie, Hauts fonctionnaires, Journalisme, ONG, Conseil", "capacite": 300, "taux_acces": 20
+    },
+    "Sciences Po Paris — Procédure Lycées Conventionnés": {
+        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [], "domaine": "Droit & Sciences Po",
+        "selectivite": "Très élevée", "profil_ideal": "Dossier exceptionnel, engagement citoyen, entretien de motivation",
+        "debouches": "Diplomatie, Cabinet ministériel, Conseil, Finance internationale", "capacite": 100, "taux_acces": 12
     },
     "Écoles d'Ingénieurs (Concours Geipi Polytech)": {
         "zone": "🇫🇷 Métropole", "type": "multiple",
         "sous_voeux": [
             "Polytech Lyon", "Polytech Nantes",
-            "Polytech Montpellier", "Polytech Lille"
+            "Polytech Montpellier", "Polytech Lille",
+            "Polytech Nice Sophia", "Polytech Clermont"
         ],
+        "domaine": "Sciences & Ingénierie",
         "selectivite": "Modérée", "profil_ideal": "Maths + Physique-Chimie. Moyenne ≥ 13",
-        "debouches": "Ingénieur dans tous secteurs (industrie, numérique, énergie)",
-        "capacite": 200, "taux_acces": 52
+        "debouches": "Ingénieur dans tous secteurs (industrie, numérique, énergie, BTP)", "capacite": 200, "taux_acces": 52
     },
-    "BUT Informatique — IUT Paris-Rives de Seine": {
-        "zone": "🇫🇷 Métropole", "type": "simple", "sous_voeux": [],
-        "selectivite": "Élevée", "profil_ideal": "Maths + NSI. Très sélectif à Paris",
-        "debouches": "Développeur, DevOps, Chef de projet SI",
-        "capacite": 80, "taux_acces": 30
+
+    # ============================================================
+    # MÉTROPOLE — SANTÉ
+    # ============================================================
+    "PASS (Parcours Accès Santé Spécifique) — Médecine/Pharmacie": {
+        "zone": "🇫🇷 Métropole", "type": "multiple",
+        "sous_voeux": [
+            "PASS — Université Paris Cité",
+            "PASS — Université de Bordeaux",
+            "PASS — Université de Lyon 1",
+            "PASS — Université de Montpellier",
+            "PASS — Université de Strasbourg",
+            "PASS — Université de Nantes"
+        ],
+        "domaine": "Social & Santé",
+        "selectivite": "Très élevée", "profil_ideal": "Excellence absolue en SVT + PC + Maths. Mention TB exigée. Travail acharné",
+        "debouches": "Médecin, Pharmacien, Chirurgien-dentiste, Sage-femme", "capacite": 150, "taux_acces": 18
+    },
+    "PASS — Université de La Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "simple", "sous_voeux": [], "domaine": "Social & Santé",
+        "selectivite": "Très élevée", "profil_ideal": "SVT + PC + Maths. Mention TB indispensable. Travail intense",
+        "debouches": "Médecin, Pharmacien, Chirurgien-dentiste, Sage-femme", "capacite": 80, "taux_acces": 20
+    },
+    "L.AS (Licence Accès Santé) — Réunion": {
+        "zone": "🇷🇪 Réunion", "type": "multiple",
+        "sous_voeux": [
+            "L.AS Biologie — Université de La Réunion",
+            "L.AS STAPS — Université de La Réunion",
+            "L.AS Chimie — Université de La Réunion"
+        ],
+        "domaine": "Social & Santé",
+        "selectivite": "Très élevée", "profil_ideal": "Voie alternative au PASS, même niveau d'exigence scientifique",
+        "debouches": "Médecin, Pharmacien, Kinésithérapeute, Sage-femme", "capacite": 40, "taux_acces": 22
+    },
+    "IFMK (Kinésithérapie) — Métropole": {
+        "zone": "🇫🇷 Métropole", "type": "multiple",
+        "sous_voeux": [
+            "IFMK de Bordeaux",
+            "IFMK de Paris — Assas",
+            "IFMK de Lyon",
+            "IFMK de Toulouse"
+        ],
+        "domaine": "Social & Santé",
+        "selectivite": "Très élevée", "profil_ideal": "Après PASS/LAS ou bac S avec mention TB. Sport requis",
+        "debouches": "Kinésithérapeute libéral, hospitalier, sportif", "capacite": 50, "taux_acces": 15
     },
 }
+
+# Domaines disponibles pour le filtre
+DOMAINES = sorted(set(v["domaine"] for v in CATALOGUE.values()))
 
 # ==========================================
 # 4. CALENDRIER OFFICIEL PARCOURSUP 2025
@@ -802,9 +1215,28 @@ if st.session_state.etape == "PROFIL":
                 "Langues & Cultures de l'Antiquité", "Arts", "Autre"
             ])
         with sc3:
-            spe3 = st.selectbox("Option / 3ème spé abandonnée", [
-                "Aucune", "Mathématiques complémentaires", "Mathématiques expertes",
-                "Sciences Po", "DNL", "Autre"
+            spe3 = st.selectbox("3ème spé abandonnée en 1ère", [
+                "Aucune",
+                "Mathématiques",
+                "Physique-Chimie",
+                "SVT (Sciences de la Vie et de la Terre)",
+                "NSI (Numérique et Sciences Informatiques)",
+                "SES (Sciences Économiques et Sociales)",
+                "HGGSP (Histoire-Géo, Géopolitique, Sciences Po)",
+                "Humanités, Littérature et Philosophie",
+                "Langues & Cultures de l'Antiquité (Latin/Grec)",
+                "LLCE (Langues Vivantes et Cultures Étrangères)",
+                "Arts (Plastiques, Cinéma, Théâtre, Musique)",
+                "EPPCS (Éducation Physique, Pratiques et Culture Sportives)",
+                "Sciences de l'Ingénieur",
+                "Biotechnologies",
+                "Management, Sciences de Gestion et Numérique (STMG)",
+                "Sciences et Technologies de la Santé et du Social (ST2S)",
+                "Biologie-Écologie (Bac STAV)",
+                "Mathématiques complémentaires (option)",
+                "Mathématiques expertes (option)",
+                "DNL (Discipline Non Linguistique)",
+                "Autre"
             ])
 
         projet = st.text_area("🎯 Projet professionnel ou domaine visé",
@@ -854,17 +1286,20 @@ elif st.session_state.etape == "VOEUX":
         st.markdown("#### 🔍 Catalogue des formations")
 
         # Filtres
-        f1, f2 = st.columns(2)
+        f1, f2, f3 = st.columns(3)
         with f1:
             zone_f = st.radio("Zone", ["Toutes", "🇷🇪 Réunion", "🇫🇷 Métropole"], horizontal=True)
         with f2:
             sel_f = st.selectbox("Sélectivité", ["Toutes", "Faible", "Modérée", "Élevée", "Très élevée"])
+        with f3:
+            dom_f = st.selectbox("Domaine", ["Tous"] + DOMAINES)
 
         # Filtrage
         formations_filtrées = {
             k: v for k, v in CATALOGUE.items()
             if (zone_f == "Toutes" or v["zone"] == zone_f)
             and (sel_f == "Toutes" or v["selectivite"] == sel_f)
+            and (dom_f == "Tous" or v.get("domaine") == dom_f)
         }
 
         formation_sel = st.selectbox("Choisir une formation", list(formations_filtrées.keys()))
@@ -1052,118 +1487,240 @@ elif st.session_state.etape == "ADMISSION":
 
     # ---- TAB 1 : Résultats ----
     with tab_resultats:
+
+        # ---- EXPLICATION DU VRAI SYSTÈME PARCOURSUP ----
+        st.markdown("""
+        <div style="background:#EEF2FF; border:1px solid #93B4F5; border-left:4px solid #003189;
+             border-radius:0 10px 10px 0; padding:1rem 1.2rem; margin-bottom:1rem; font-size:0.88rem;">
+            <b style="color:#003189;">📋 Les 3 réponses possibles sur Parcoursup (comme dans la vraie vie) :</b><br>
+            <span style="color:#1a2a3a;">
+            • <b>✅ OUI DÉFINITIF</b> — Tu acceptes et <u>abandonnes automatiquement tous tes autres vœux en attente</u>. C'est terminé.<br>
+            • <b>⏳ OUI MAIS J'ATTENDS</b> — Tu gardes cette proposition <u>en sécurité</u>, mais tu restes en liste d'attente pour tes vœux prioritaires.<br>
+            • <b>❌ NON MERCI</b> — Tu refuses définitivement cette proposition. Elle disparaît.
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+
         # Tri : OUI > EN ATTENTE > NON
         def tri_statut(item):
             s = item[1]["statut"]
-            if "OUI" in s: return 0
-            if "ATTENTE" in s: return 1
-            return 2
+            r = item[1].get("reponse_eleve", "")
+            if r == "OUI_DEFINITIF": return -1   # tout en haut
+            if r == "OUI_ATTENTE": return 0
+            if "OUI" in s: return 1
+            if "ATTENTE" in s: return 2
+            return 3
 
         liste_triee = sorted(st.session_state.resultats.items(), key=tri_statut)
 
         # Compteurs résumé
-        nb_oui = sum(1 for _, d in st.session_state.resultats.items() if "OUI" in d["statut"])
-        nb_att = sum(1 for _, d in st.session_state.resultats.items() if "ATTENTE" in d["statut"])
-        nb_non = sum(1 for _, d in st.session_state.resultats.items() if "NON" in d["statut"] or "REFUSÉ" in d["statut"])
+        nb_oui    = sum(1 for _, d in st.session_state.resultats.items() if "OUI" in d["statut"] and "REFUSÉ" not in d["statut"])
+        nb_att    = sum(1 for _, d in st.session_state.resultats.items() if "ATTENTE" in d["statut"])
+        nb_non    = sum(1 for _, d in st.session_state.resultats.items() if "NON" in d["statut"] or "REFUSÉ" in d["statut"])
+        choix_def = next((nom for nom, d in st.session_state.resultats.items() if d.get("reponse_eleve") == "OUI_DEFINITIF"), None)
+        choix_tmp = [(nom, d) for nom, d in st.session_state.resultats.items() if d.get("reponse_eleve") == "OUI_ATTENTE"]
 
-        m1, m2, m3 = st.columns(3)
+        # Bannière choix définitif
+        if choix_def:
+            st.markdown(f"""
+            <div style="background:#E3FFF3; border:2px solid #00875A; border-radius:12px;
+                 padding:1rem 1.4rem; margin-bottom:1rem; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:2rem;">🎉</span>
+                <div>
+                    <b style="color:#00875A; font-size:1rem;">Félicitations ! Tu as confirmé ton inscription définitive.</b><br>
+                    <span style="font-size:0.88rem; color:#1a4a2a;">Formation choisie : <b>{choix_def}</b><br>
+                    Tous tes autres vœux en attente ont été abandonnés automatiquement.</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        m1, m2, m3, m4 = st.columns(4)
         with m1:
-            st.markdown(f"""<div class="card" style="text-align:center; border-top:3px solid {('#00875A' if nb_oui>0 else '#DDE3EF')}">
+            st.markdown(f"""<div class="card" style="text-align:center; border-top:3px solid {'#00875A' if nb_oui>0 else '#DDE3EF'}">
                 <div style="font-size:2rem; font-weight:800; color:#00875A;">{nb_oui}</div>
-                <div style="font-size:0.8rem; color:#5A6478;">Proposition(s) OUI</div></div>""",
-                unsafe_allow_html=True)
+                <div style="font-size:0.78rem; color:#5A6478;">Proposition(s) OUI</div></div>""", unsafe_allow_html=True)
         with m2:
-            st.markdown(f"""<div class="card" style="text-align:center; border-top:3px solid {('#D97706' if nb_att>0 else '#DDE3EF')}">
-                <div style="font-size:2rem; font-weight:800; color:#D97706;">{nb_att}</div>
-                <div style="font-size:0.8rem; color:#5A6478;">En liste d'attente</div></div>""",
-                unsafe_allow_html=True)
+            nb_oui_att = len(choix_tmp)
+            st.markdown(f"""<div class="card" style="text-align:center; border-top:3px solid {'#003189' if nb_oui_att>0 else '#DDE3EF'}">
+                <div style="font-size:2rem; font-weight:800; color:#003189;">{nb_oui_att}</div>
+                <div style="font-size:0.78rem; color:#5A6478;">Gardé en attente</div></div>""", unsafe_allow_html=True)
         with m3:
-            st.markdown(f"""<div class="card" style="text-align:center; border-top:3px solid {('#C0000A' if nb_non>0 else '#DDE3EF')}">
+            st.markdown(f"""<div class="card" style="text-align:center; border-top:3px solid {'#D97706' if nb_att>0 else '#DDE3EF'}">
+                <div style="font-size:2rem; font-weight:800; color:#D97706;">{nb_att}</div>
+                <div style="font-size:0.78rem; color:#5A6478;">En liste d'attente</div></div>""", unsafe_allow_html=True)
+        with m4:
+            st.markdown(f"""<div class="card" style="text-align:center; border-top:3px solid {'#C0000A' if nb_non>0 else '#DDE3EF'}">
                 <div style="font-size:2rem; font-weight:800; color:#C0000A;">{nb_non}</div>
-                <div style="font-size:0.8rem; color:#5A6478;">Non retenus</div></div>""",
-                unsafe_allow_html=True)
+                <div style="font-size:0.78rem; color:#5A6478;">Refusés/Non retenus</div></div>""", unsafe_allow_html=True)
 
         st.divider()
 
         for nom, data in liste_triee:
             statut = data["statut"]
-            if "REFUSÉ PAR L'ÉLÈVE" in statut:
+            reponse = data.get("reponse_eleve", "")  # "", "OUI_DEFINITIF", "OUI_ATTENTE", "NON"
+
+            # Masquer les refusés définitivement
+            if "REFUSÉ PAR L'ÉLÈVE" in statut or reponse == "NON":
+                with st.expander(f"~~{nom}~~ — Refusé/Abandonné", expanded=False):
+                    st.caption("Ce vœu a été refusé ou abandonné définitivement.")
                 continue
 
-            is_accepte = (st.session_state.choix_actuel == nom)
-            card_class = "card-accepte" if is_accepte else ("card-oui" if "OUI" in statut else "card-attente" if "ATTENTE" in statut else "card-non")
+            # Couleur de la carte selon état
+            if reponse == "OUI_DEFINITIF":
+                card_style = "border:2px solid #00875A; background:#E3FFF3;"
+            elif reponse == "OUI_ATTENTE":
+                card_style = "border:2px solid #003189; background:#EEF2FF;"
+            elif "OUI" in statut:
+                card_style = "border-left:5px solid #00875A; background:#F0FFF8;"
+            elif "ATTENTE" in statut:
+                card_style = "border-left:5px solid #D97706; background:#FFF8E6;"
+            else:
+                card_style = "border-left:5px solid #C0000A; background:#FFF0F0;"
 
-            with st.container():
-                st.markdown(f'<div class="card {card_class}">', unsafe_allow_html=True)
-                c1, c2, c3 = st.columns([3, 2, 1.5])
+            st.markdown(f'<div class="card" style="{card_style}">', unsafe_allow_html=True)
+            c1, c2, c3 = st.columns([3, 2, 2])
 
-                with c1:
-                    flag = data["zone"].split()[0]
-                    groupe_txt = f" <span style='color:#9CA3AF; font-size:0.78rem;'>— {data['groupe']}</span>" if data['groupe'] != "Vœu unique" else ""
-                    st.markdown(f"**{flag} {nom}**{groupe_txt}", unsafe_allow_html=True)
+            with c1:
+                flag = data["zone"].split()[0]
+                groupe_txt = f"<br><span style='color:#9CA3AF; font-size:0.75rem;'>↳ {data['groupe']}</span>" if data['groupe'] != "Vœu unique" else ""
 
-                    if "OUI ✅" in statut:
-                        st.markdown('<span class="badge-oui">ADMISSION PROPOSÉE ✅</span>', unsafe_allow_html=True)
-                    elif "OUI-SI" in statut:
-                        st.markdown('<span class="badge-oui-si">OUI-SI 📘 (avec remise à niveau)</span>', unsafe_allow_html=True)
-                    elif "ATTENTE" in statut:
-                        st.markdown('<span class="badge-attente">EN LISTE D\'ATTENTE ⏳</span>', unsafe_allow_html=True)
-                    elif "NON" in statut:
-                        st.markdown('<span class="badge-non">NON RETENU ❌</span>', unsafe_allow_html=True)
+                # Badge statut formation
+                if "OUI ✅" in statut:
+                    badge = '<span class="badge-oui">ADMISSION PROPOSÉE ✅</span>'
+                elif "OUI-SI" in statut:
+                    badge = '<span class="badge-oui-si">OUI-SI 📘</span>'
+                elif "ATTENTE" in statut:
+                    badge = '<span class="badge-attente">EN LISTE D\'ATTENTE ⏳</span>'
+                else:
+                    badge = '<span class="badge-non">NON RETENU ❌</span>'
 
-                with c2:
-                    if "ATTENTE" in statut and data.get("details"):
-                        rang = data["details"]["rang"]
-                        dernier = data["details"]["dernier_admis"]
-                        places = rang - dernier
-                        prog = min(1.0, dernier / rang) if rang > 0 else 0
+                # Badge réponse élève
+                if reponse == "OUI_DEFINITIF":
+                    badge_rep = ' &nbsp;<span style="background:#00875A;color:white;padding:2px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;">✅ INSCRIPTION CONFIRMÉE</span>'
+                elif reponse == "OUI_ATTENTE":
+                    badge_rep = ' &nbsp;<span style="background:#003189;color:white;padding:2px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;">⏳ GARDÉ EN SÉCURITÉ</span>'
+                else:
+                    badge_rep = ""
 
-                        st.markdown(f"""
-                        <div style="font-size:0.82rem;">
-                            📍 Ton rang : <b>{rang}</b><br>
-                            ✅ Dernier appelé : <b>{dernier}</b><br>
-                            ⬆️ Il reste <b>{max(0,places)}</b> place(s) à remonter
-                        </div>
-                        """, unsafe_allow_html=True)
-                        st.progress(prog)
-                    elif "OUI" in statut:
-                        score = data.get("score_profil", 0)
-                        st.markdown(f"""
-                        <div style="font-size:0.82rem; color:#00875A;">
-                            🎯 Score de profil estimé : <b>{score}%</b><br>
-                            📌 Formation compatible avec ton dossier
-                        </div>
-                        """, unsafe_allow_html=True)
-                    elif "NON" in statut:
-                        score = data.get("score_profil", 0)
-                        st.markdown(f"""
-                        <div style="font-size:0.82rem; color:#C0000A;">
-                            📊 Score de profil : <b>{score}%</b><br>
-                            La sélectivité était trop élevée.
-                        </div>
-                        """, unsafe_allow_html=True)
+                st.markdown(f"""
+                <b style="font-size:0.92rem;">{flag} {nom}</b>{groupe_txt}<br>
+                <div style="margin-top:6px;">{badge}{badge_rep}</div>
+                """, unsafe_allow_html=True)
 
-                with c3:
-                    if is_accepte:
-                        if st.button("❌ Renoncer", key=f"ren_{nom}"):
-                            st.session_state.choix_actuel = None
-                            st.rerun()
-                    elif "OUI" in statut:
-                        if st.button("✅ Accepter", key=f"acc_{nom}", type="primary"):
+            with c2:
+                if "ATTENTE" in statut and data.get("details"):
+                    rang = data["details"]["rang"]
+                    dernier = data["details"]["dernier_admis"]
+                    places = max(0, rang - dernier)
+                    prog = min(1.0, dernier / rang) if rang > 0 else 0
+                    st.markdown(f"""
+                    <div style="font-size:0.82rem;">
+                        📍 Ton rang : <b>{rang}</b><br>
+                        ✅ Dernier appelé : <b>{dernier}</b><br>
+                        ⬆️ Encore <b>{places}</b> place(s) à remonter
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.progress(prog)
+                elif "OUI" in statut:
+                    score = data.get("score_profil", 0)
+                    st.markdown(f"""
+                    <div style="font-size:0.82rem; color:#00875A;">
+                        🎯 Score profil : <b>{score}%</b><br>
+                        📌 Compatible avec ton dossier
+                    </div>
+                    """, unsafe_allow_html=True)
+                elif "NON" in statut:
+                    st.markdown(f"""
+                    <div style="font-size:0.82rem; color:#C0000A;">
+                        📊 Score profil : <b>{data.get('score_profil',0)}%</b><br>
+                        Sélectivité trop élevée pour ton dossier.
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            with c3:
+                # =========================================
+                # VRAIS BOUTONS PARCOURSUP (3 options)
+                # =========================================
+
+                if reponse == "OUI_DEFINITIF":
+                    # Inscription définitive — seul le bouton d'info reste
+                    st.markdown("""
+                    <div style="font-size:0.8rem; color:#00875A; font-weight:600;">
+                    🎓 Inscription confirmée.<br>Rendez-vous à la rentrée !
+                    </div>""", unsafe_allow_html=True)
+
+                elif reponse == "OUI_ATTENTE":
+                    # Gardé en sécurité — peut upgrader vers définitif ou libérer
+                    st.markdown("<span style='font-size:0.78rem; color:#003189;'>Ce vœu est gardé en sécurité.</span>", unsafe_allow_html=True)
+                    if not choix_def:
+                        if st.button("✅ Confirmer définitivement", key=f"def_{nom}", type="primary"):
+                            # Abandon de tous les autres vœux en attente
+                            for n2, d2 in st.session_state.resultats.items():
+                                if n2 != nom and d2.get("reponse_eleve") == "OUI_ATTENTE":
+                                    d2["reponse_eleve"] = "NON"
+                                if n2 != nom and "ATTENTE" in d2["statut"]:
+                                    d2["reponse_eleve"] = "NON"  # Abandon liste d'attente aussi
+                            st.session_state.resultats[nom]["reponse_eleve"] = "OUI_DEFINITIF"
                             st.session_state.choix_actuel = nom
+                            st.balloons()
                             st.rerun()
-                        if st.button("🗑️ Refuser", key=f"ref_{nom}"):
-                            st.session_state.resultats[nom]["statut"] = "REFUSÉ PAR L'ÉLÈVE ❌"
-                            if st.session_state.choix_actuel == nom:
-                                st.session_state.choix_actuel = None
-                            st.rerun()
-                    elif "ATTENTE" in statut:
-                        if st.button("🚪 Se retirer", key=f"ret_{nom}"):
-                            st.session_state.resultats[nom]["statut"] = "REFUSÉ PAR L'ÉLÈVE ❌"
-                            st.rerun()
+                    if st.button("❌ Abandonner ce vœu", key=f"ab_{nom}"):
+                        st.session_state.resultats[nom]["reponse_eleve"] = "NON"
+                        st.rerun()
 
-                st.markdown('</div>', unsafe_allow_html=True)
-                st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
+                elif "OUI" in statut and not choix_def:
+                    # Proposition disponible, pas encore répondu
+                    st.markdown("""
+                    <div style="font-size:0.78rem; color:#D97706; font-weight:600; margin-bottom:6px;">
+                    ⚠️ Tu dois répondre avant la date limite !
+                    </div>""", unsafe_allow_html=True)
+
+                    # BOUTON 1 : OUI DÉFINITIF
+                    if st.button("✅ OUI DÉFINITIF", key=f"ouiD_{nom}", type="primary",
+                                  help="J'accepte et j'abandonne tous mes autres vœux en attente"):
+                        for n2, d2 in st.session_state.resultats.items():
+                            if n2 != nom:
+                                if d2.get("reponse_eleve") == "OUI_ATTENTE":
+                                    d2["reponse_eleve"] = "NON"
+                                if "ATTENTE" in d2["statut"]:
+                                    d2["reponse_eleve"] = "NON"
+                        st.session_state.resultats[nom]["reponse_eleve"] = "OUI_DEFINITIF"
+                        st.session_state.choix_actuel = nom
+                        st.balloons()
+                        st.rerun()
+
+                    # BOUTON 2 : OUI MAIS J'ATTENDS
+                    already_tmp = any(d.get("reponse_eleve") == "OUI_ATTENTE"
+                                      for n2, d in st.session_state.resultats.items() if n2 != nom)
+                    btn_label = "⏳ OUI MAIS J'ATTENDS"
+                    if st.button(btn_label, key=f"ouiA_{nom}",
+                                  help="Je garde ce vœu en sécurité et j'attends mes vœux prioritaires"):
+                        # On remplace l'ancien "gardé" si besoin
+                        for n2, d2 in st.session_state.resultats.items():
+                            if n2 != nom and d2.get("reponse_eleve") == "OUI_ATTENTE":
+                                d2["reponse_eleve"] = ""  # libère l'ancien
+                        st.session_state.resultats[nom]["reponse_eleve"] = "OUI_ATTENTE"
+                        st.rerun()
+
+                    # BOUTON 3 : NON MERCI
+                    if st.button("❌ NON MERCI", key=f"non_{nom}",
+                                  help="Je refuse définitivement cette proposition"):
+                        st.session_state.resultats[nom]["reponse_eleve"] = "NON"
+                        st.rerun()
+
+                elif "OUI" in statut and choix_def:
+                    st.markdown("""<span style='font-size:0.78rem; color:#9CA3AF;'>
+                    Tu as déjà confirmé une inscription définitive.</span>""", unsafe_allow_html=True)
+
+                elif "ATTENTE" in statut and not choix_def:
+                    if st.button("🚪 Se retirer de la liste", key=f"ret_{nom}",
+                                  help="Je me retire définitivement de cette liste d'attente"):
+                        st.session_state.resultats[nom]["reponse_eleve"] = "NON"
+                        st.rerun()
+
+            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
+
 
     # ---- TAB 2 : Conseil IA ----
     with tab_conseil:
